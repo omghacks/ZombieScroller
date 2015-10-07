@@ -8,7 +8,7 @@ Template.Boot.prototype = {
         // use your own images;
 
         //this.load.image("logo", "assests/images/logo.png");
-        //this.load.image("preloadBar", "assests/images/preloader-bar.png");
+        this.load.image("preloadBar", "assests/images/preloader-bar.png");
 
     },
     create: function() {
@@ -32,7 +32,8 @@ Template.Boot.prototype = {
         }
         // this a all the game configurations 
         // now begins the loading of the actual game assests
-        //this commanf will move the game on to the next state
-        this.state.start('preload');
+        //this commanf will move the game on to the next statea
+        console.log("about to go to preload");
+        this.state.start('Preload');
     }
 };
