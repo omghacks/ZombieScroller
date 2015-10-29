@@ -16,21 +16,21 @@ var mainState = {
 
         // Create a game sprite from the logo image positioned
         // at the center of the game world
+        var bg = game.add.image (0, 0,'background');
+        bg.width = game.width
+        bg.height = game.height
         this.sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
         // The position of the sprite should be based on the
         // center of the image (default is top-left)
         this.sprite.anchor.setTo(0.5, 0.5);
         // Change background color to a gray color
-        var bg = game.add.image (0, 0,'background');
-        bg.width = game.width
-        bg.height = game.height
     },
     update: function () {
         // This function is called 60 times per second
         // It contains the game's logic
         
         // Rotate the sprite by 1 degrees
-        this.sprite.angle += 180.1;
+        this.sprite.angle += 180.15;
     }
 };
 
