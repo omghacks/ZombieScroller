@@ -6,7 +6,9 @@ var mainState = {
     preload: function () {
         // This function will be executed at the beginning
         // That's where we load the game's assets
+        game.load.image('background', 'assets/images/background.jpg');
         game.load.image('logo', 'assets/images/missionbit.png');
+        
     },
     create: function () {
         // This function is called after the preload function
@@ -19,19 +21,21 @@ var mainState = {
         // center of the image (default is top-left)
         this.sprite.anchor.setTo(0.5, 0.5);
         // Change background color to a gray color
-        game.stage.backgroundColor = '#999999';
+        var bg = game.add.image (0, 0,'background');
+        bg.width = game.width
+        bg.height = game.height
     },
     update: function () {
         // This function is called 60 times per second
         // It contains the game's logic
         
         // Rotate the sprite by 1 degrees
-        this.sprite.angle += 1;
+        this.sprite.angle += 180.1;
     }
 };
 
 // Initialize Phaser
-var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(1200, 650, Phaser.AUTO, 'gameDiv');
 
 // And finally we tell Phaser to add and start our 'main' state
 game.state.add('main', mainState);
