@@ -8,8 +8,13 @@ var mainState = {
         // That's where we load the game's assets
         game.load.image('background', 'assets/images/background.jpg');
         game.load.image('logo', 'assets/images/missionbit.png');
+<<<<<<< HEAD
+=======
+        game.load.image('mainCharac', 'assets/images/mariopixel.png');
+>>>>>>> characters
         
     },
+
     create: function () {
         // This function is called after the preload function
         // Here we set up the game, display sprites, etc.
@@ -17,6 +22,9 @@ var mainState = {
         // Create a game sprite from the logo image positioned
         // at the center of the game world
         this.sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
+        this.character = game.add.sprite(25,50, 'mainCharac');
+        this.character.scale.x = 0.5;
+        this.character.scale.y = 0.5;
         // The position of the sprite should be based on the
         // center of the image (default is top-left)
         this.sprite.anchor.setTo(0.5, 0.5);
@@ -28,9 +36,23 @@ var mainState = {
     update: function () {
         // This function is called 60 times per second
         // It contains the game's logic
+        if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+           
+            this.character.x += 5;
+        }
+        if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+           
+            this.character.x -= 5;
+        }
+        
         
         // Rotate the sprite by 1 degrees
+<<<<<<< HEAD
         this.sprite.angle += 180.1;
+=======
+        this.sprite.angle += 1;
+        
+>>>>>>> characters
     }
 };
 
