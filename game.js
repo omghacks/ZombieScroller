@@ -7,7 +7,7 @@ var mainState = {
         // This function will be executed at the beginning
         // That's where we load the game's assets
         game.load.image('background', 'assets/images/background.jpg');
-        game.load.image('logo', 'assets/images/missionbit.png');
+        game.load.image('floor', 'assets/images/floor.jpg');
         
     },
     create: function () {
@@ -16,21 +16,29 @@ var mainState = {
 
         // Create a game sprite from the logo image positioned
         // at the center of the game world
-        var bg = game.add.image (0, 0,'background');
-        bg.width = game.width
-        bg.height = game.height
-        this.sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
+        this.bg = game.add.image (0, 0,'background');
+        this.bg.width = game.width;
+        this.bg.height = game.height;
         // The position of the sprite should be based on the
         // center of the image (default is top-left)
-        this.sprite.anchor.setTo(0.5, 0.5);
+        //this.sprite.anchor.setTo(0.5, 0.5);
         // Change background color to a gray color
+        this.floor = game.add.image (0, game.world.height - 80, 'floor');
+        this.floor.height = 80;
+        this.floor.width = game.width;
+        game.physics.enable(this.floor);
+        this.floor.body.allowGravity = false;
+        this.floor.body.immovable = true;
+        this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+    
     },
     update: function () {
         // This function is called 60 times per second
         // It contains the game's logic
         
         // Rotate the sprite by 1 degrees
-        this.sprite.angle += 180.15;
+       
     }
 };
 
