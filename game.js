@@ -47,12 +47,8 @@ var mainState = {
         
         
         // Rotate the sprite by 1 degrees
-<<<<<<< HEAD
-        this.sprite.angle += 180.1;
-=======
+
         this.sprite.angle += 1;
-        
->>>>>>> characters
     }
 };
 
