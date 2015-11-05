@@ -28,6 +28,16 @@ var mainState = {
         bg.width = game.width
         bg.height = game.height
 		
+		this.character1 = game.add.sprite (50,50, 'zombieCharac');
+		this.character1.scale.x = 0.5;
+		this.character1.scale.y = 0.5;
+		game.physics.startSystem(Phaser.Physics.ARCADE);
+		game.physics.enable(this.character1,Phaser.Physics.ARCADE);
+		this.character1.body.collideWorldBounds = true;
+		this.character1.body.bounce.x = 1;
+		this.character1.body.bounce.y = 1;
+		
+		this.direction = -1;
     },
     update: function () {
         // This function is called 60 times per second
@@ -40,9 +50,19 @@ var mainState = {
            
             this.character.x -= 5;
         }
+		
+		
+		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			game.physics.arcade.moveToXY(
+				this.character1, 
+				this.character1.body.x - (70*this.direction), 
+									// target x position
+				Phaser.Math.snapTo(this.character1.body.y, 70), // keep y position the same as we are moving along x axis
+				250 // velocity to move at
+			) 
+			this.direction = -1 * this.direction;
+			};
         
-        
-        // Rotate the sprite by 1 degrees
 
     }
 };
