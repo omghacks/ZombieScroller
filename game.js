@@ -9,7 +9,7 @@ var mainState = {
         game.load.image('background', 'assets/images/background.jpg');
         game.load.image('mainCharac', 'assets/images/mariopixel.png');
         game.load.image('zombieCharac', 'assets/images/zombie.png');
-		
+	    game.load.image('jumppowerup', 'assets/images/Jump.png');	
     },
 
     create: function () {
@@ -18,7 +18,18 @@ var mainState = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.arcade.gravity.y = 200;
         
-		var bg = game.add.image (0, 0,'background');
+       
+        var bg = game.add.image (0, 0,'background');
+        
+         this.powerupjump = game.add.sprite(400,50, 'jumppowerup');
+        this.powerupjump.scale.x = 0.09;
+        this.powerupjump.scale.y = 0.09;
+        game.physics.enable(this.powerupjump, Phaser.Physics.ARCADE);
+        
+        this.powerupjump.body.collideWorldBounds = true;
+        
+        this.powerupjump.body.bounce.y = 0.5;        
+        
         this.character = game.add.sprite(400,50, 'mainCharac');
         game.physics.enable(this.character, Phaser.Physics.ARCADE);
         this.character.scale.x = 0.2;
@@ -69,7 +80,7 @@ var mainState = {
        
 
 
-        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.character.body.onFloor() && game.time.now > this.jumpTimer)
+        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && this.character.body.onFloor() && game.time.now > this.jumpTimer)
         {
             this.character.body.velocity.y = -250;
             this.jumpTimer = game.time.now + 750;
