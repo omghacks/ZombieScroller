@@ -7,12 +7,9 @@ var mainState = {
         // This function will be executed at the beginning
         // That's where we load the game's assets
         game.load.image('background', 'assets/images/background.jpg');
-        game.load.image('logo', 'assets/images/missionbit.png');
-<<<<<<< HEAD
-=======
         game.load.image('mainCharac', 'assets/images/mariopixel.png');
->>>>>>> characters
-        
+        game.load.image('zombieCharac', 'assets/images/zombie.png');
+		
     },
 
     create: function () {
@@ -21,17 +18,16 @@ var mainState = {
 
         // Create a game sprite from the logo image positioned
         // at the center of the game world
-        this.sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
+		var bg = game.add.image (0, 0,'background');
         this.character = game.add.sprite(25,50, 'mainCharac');
         this.character.scale.x = 0.5;
         this.character.scale.y = 0.5;
         // The position of the sprite should be based on the
         // center of the image (default is top-left)
-        this.sprite.anchor.setTo(0.5, 0.5);
         // Change background color to a gray color
-        var bg = game.add.image (0, 0,'background');
         bg.width = game.width
         bg.height = game.height
+		
     },
     update: function () {
         // This function is called 60 times per second
@@ -48,7 +44,6 @@ var mainState = {
         
         // Rotate the sprite by 1 degrees
 
-        this.sprite.angle += 1;
     }
 };
 
