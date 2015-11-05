@@ -1,5 +1,16 @@
 /*global Phaser*/
 /*jslint sloppy:true, browser: true, devel: true, eqeq: true, vars: true, white: true*/
+	
+var spritecreator = function(imagename,scale,initialx){
+		var sprite = game.add.sprite(initialx, 50, imagename);
+		game.physics.enable(sprite, Phaser.Physics.ARCADE);
+		sprite.body.collideWorldBounds = true;
+		sprite.scale.x = scale;
+        sprite.scale.y = scale;
+		
+	return sprite;
+}
+
 var mainState = {
     // Here we add all the functions we need for our state
     // For this project we will just have 3 functions
@@ -18,6 +29,7 @@ var mainState = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.arcade.gravity.y = 200;
         
+
        
         var bg = game.add.image (0, 0,'background');
         
@@ -30,11 +42,17 @@ var mainState = {
         
         this.powerupjump.body.bounce.y = 0.5;        
         
-        this.character = game.add.sprite(400,50, 'mainCharac');
-        game.physics.enable(this.character, Phaser.Physics.ARCADE);
-        this.character.scale.x = 0.2;
-        this.character.scale.y = 0.2;
-        this.character.body.collideWorldBounds = true;
+        
+
+		
+        this.character = spritecreator ('mainCharac',0.2,5);
+		
+		//this.character = {
+		//	health: 0,
+		//	sprite: game.add.sprite(400,50, 'mainCharac')
+		//}
+		
+
         // The position of the sprite should be based on the
         // center of the image (default is top-left)
         // Change background color to a gray color
@@ -42,13 +60,10 @@ var mainState = {
         bg.height = game.height
         this.jumpTimer = 0
 		
-		this.character1 = game.add.sprite (50,50, 'zombieCharac');
-		this.character1.scale.x = 0.5;
-		this.character1.scale.y = 0.5;
-		game.physics.enable(this.character1,Phaser.Physics.ARCADE);
-		this.character1.body.collideWorldBounds = true;
+
+		this.character1 = spritecreator('zombieCharac',0.2,20);
 		this.character1.body.bounce.x = 1;
-		this.character1.body.bounce.y = 1;
+		this.character1.body.bounce.y = 0;
 		
 		this.direction = -1;
     },
