@@ -62,7 +62,13 @@ var mainState = {
            
             this.character.x -= 5;
         }
-		
+		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+        this.upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP]);
+        this.downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        game.input.keyboard.addKeyCapture([Phaser.Keyboard.DOWN]);
+        
 		
 		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			game.physics.arcade.moveToXY(
