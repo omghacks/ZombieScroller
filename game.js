@@ -1,17 +1,17 @@
 /*global Phaser*/
 /*jslint sloppy:true, browser: true, devel: true, eqeq: true, vars: true, white: true*/
-	
-var spritecreator = function(imagename,scale,initialx){
+
+
+var mainState = {
+    spritecreator: function(imagename,scale,initialx){
 		var sprite = game.add.sprite(initialx, 50, imagename);
 		game.physics.enable(sprite, Phaser.Physics.ARCADE);
 		sprite.body.collideWorldBounds = true;
 		sprite.scale.x = scale;
         sprite.scale.y = scale;
-		
-	return sprite;
-}
-
-var mainState = {
+        this.entities.add (sprite)
+	   return sprite;
+    },   
     // Here we add all the functions we need for our state
     // For this project we will just have 3 functions
     preload: function () {
@@ -20,18 +20,33 @@ var mainState = {
         game.load.image('background', 'assets/images/background.jpg');
         game.load.image('mainCharac', 'assets/images/mariopixel.png');
         game.load.image('zombieCharac', 'assets/images/zombie.png');
+        game.load.image('floor', 'assets/images/floor.jpg');
+
 		
     },
 
     create: function () {
+        
         // This function is called after the preload function
         // Here we set up the game, display sprites, etc.
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.physics.arcade.gravity.y = 200;
+        game.physics.arcade.gravity.y = 2000;
         
 		var bg = game.add.image (0, 0,'background');
-        this.character = spritecreator ('mainCharac',0.2,5);
-		
+        this.platform = game.add.group ()
+        this.platform.enableBody = true;
+        this.floor = this.platform.create (0, game.world.height - 80, 'floor')
+//        this.floor = game.add.sprite (0, game.world.height - 80, 'floor');
+        this.floor.height = 80;
+        this.floor.width = game.width;
+//        game.physics.enable(this.floor);
+        this.floor.body.allowGravity = false;
+        this.floor.body.immovable = true;
+//        this.floor.body.collideWorldBounds = true;
+        
+        this.entities = game.add.group()
+        
+        this.character = this.spritecreator ('mainCharac',0.2,5);
 		//this.character = {
 		//	health: 0,
 		//	sprite: game.add.sprite(400,50, 'mainCharac')
@@ -45,22 +60,29 @@ var mainState = {
         this.jumpTimer = 0
 		
 
-		this.character1 = spritecreator('zombieCharac',0.2,20);
-		this.character1.body.bounce.x = 1;
+		this.character1 = this.spritecreator('zombieCharac',0.2,20);
+		this.character1.body.bounce.x = 100;
 		this.character1.body.bounce.y = 0;
-		
+				
+
+        
+        //this.entities.setAll ("body.immovable", true);
+        
 		this.direction = -1;
     },
     update: function () {
         // This function is called 60 times per second
         // It contains the game's logic
+        console.log(this.character1.body.checkCollision)
+        game.physics.arcade.collide(this.entities, this.platform)
+        game.physics.arcade.collide(this.entities, this.entities)
         if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
            
-            this.character.x += 5;
+            this.character.x += 6;
         }
         if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
            
-            this.character.x -= 5;
+            this.character.x -= 6;
         }
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
@@ -69,30 +91,12 @@ var mainState = {
         this.downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.DOWN]);
         
-		
-		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-			game.physics.arcade.moveToXY(
-				this.character1, 
-				this.character1.body.x - (70*this.direction), 
-									// target x position
-				Phaser.Math.snapTo(this.character1.body.y, 70), // keep y position the same as we are moving along x axis
-				250 // velocity to move at
-			) 
-			this.direction = -1 * this.direction;
-			};
-        
-
-       
-
-
-        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.character.body.onFloor() && game.time.now > this.jumpTimer)
-        {
-            this.character.body.velocity.y = -250;
-            this.jumpTimer = game.time.now + 750;
+        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && game.time.now > this.jumpTimer)
+        {        
+            this.character.body.velocity.y = -700;
+            this.jumpTimer = game.time.now + 750;     
         }
-       
-
-
+        
     }
 };
 
