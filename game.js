@@ -1,6 +1,12 @@
 /*global Phaser*/
 /*jslint sloppy:true, browser: true, devel: true, eqeq: true, vars: true, white: true*/
+var isfacingright = true;
 
+var time = 0;
+
+var time2 = 0;
+
+var score1 = 0;
 
 var mainState = {
     spritecreator: function(imagename,scale,initialx){
@@ -20,11 +26,14 @@ var mainState = {
         game.load.image('mainCharac', 'assets/images/mariopixel.png');
         game.load.image('zombieCharac', 'assets/images/zombie.png');
         game.load.image('floor', 'assets/images/floor.jpg');
-
+        game.load.image('sword', 'assets/images/sword.png')
 		
     },
 
     create: function () {
+        
+        var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
+        this.playerOneScore = game.add.text(100,100, "5xxxxxx", style);
         
         this.jumpTimer = 0;
         
@@ -39,8 +48,8 @@ var mainState = {
         game.physics.arcade.gravity.y = 2000;
         
         //adds the floor into the game
-        this.floor = game.add.sprite(0, game.height - 30, 'floor');
-        this.floor.height = 30;
+        this.floor = game.add.sprite(0, game.height - 50, 'floor');
+        this.floor.height = 50;
         this.floor.width = game.width;
         
         //enables physics for the floor
@@ -56,7 +65,9 @@ var mainState = {
         
         this.enemies = game.add.group();
 
-		this.enemy = this.spritecreator('zombieCharac',0.2,20);
+		this.enemy = this.spritecreator('zombieCharac',0.2,200);
+        
+        this.enemy.body.velocity.x = 100;
         
         this.enemies.add(this.enemy);
 
@@ -69,9 +80,17 @@ var mainState = {
         game.physics.arcade.collide(this.character, this.enemies, this.check);
         
         if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+            this.character.anchor.setTo(.5, 1); //so it flips around its middle
+            this.character.scale.x = -0.2; //facing default direction
+            this.character.scale.x = 0.2; //flipped
+            isfacingright = true;
            
             this.character.body.velocity.x = 300;
         } else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+            this.character.anchor.setTo(.5, 1); //so it flips around its middle
+            this.character.scale.x = 0.2; //facing default direction
+            this.character.scale.x = -0.2; //flipped
+            isfacingright = false;
            
             this.character.body.velocity.x = -300;
         } else {
@@ -90,17 +109,51 @@ var mainState = {
             this.jumpTimer = game.time.now + 750;     
         }
         
+        if (time > 30) {
+            for (var i = 0; i < this.enemies.length; i++) {
+                 this.temp = this.enemies.getChildAt(i);
+                 this.temp.body.velocity.x = this.temp.body.velocity.x * (Math.round(Math.random()) * 2 - 1);
+            }
+            time = 0;
+        } else {
+            time++;
+        }
+        
+        if (time2 > 60) {
+            this.temp = this.spritecreator('zombieCharac',0.2, Math.random() * 1000 - 0);
+            this.temp.body.velocity.x = 100;
+            this.enemies.add(this.temp);
+            time2 = 0;
+        } else {
+            time2++;
+        }
+//        if (this.temp.sprite.body.y < 300){
+//            this.temp.sprite.body.y++;
+//        }
     },
     
     check: function(char, enemy) {
-        if(char.body.touching.left) {
+        if(char.body.touching.left && isfacingright)  {
+            char.kill();
+        }
+        if(char.body.touching.left && !isfacingright) {
+            score1++;
+            console.log(score1);
             enemy.kill();
+        }
+        if(char.body.touching.right && isfacingright) {
+            score1++;
+            console.log(score1);
+            enemy.kill();
+        }
+        if(char.body.touching.right && !isfacingright) {
+            char.kill();
         }
         
         if (char.body.touching.down) {
-            enemy.body.y = game.height - 80;
+            enemy.body.y = game.height - 100;
         }
-    }    
+    }
 };
 
 // Initialize Phaser
