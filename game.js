@@ -8,6 +8,10 @@ var time2 = 0;
 
 var score1 = 0;
 
+var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
+
+var scoreText;
+
 var mainState = {
     spritecreator: function(imagename,scale,initialx){
 		var sprite = game.add.sprite(initialx, 50, imagename);
@@ -31,9 +35,6 @@ var mainState = {
     },
 
     create: function () {
-        
-        var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
-        this.playerOneScore = game.add.text(100,100, "5xxxxxx", style);
         
         this.jumpTimer = 0;
         
@@ -70,6 +71,8 @@ var mainState = {
         this.enemy.body.velocity.x = 100;
         
         this.enemies.add(this.enemy);
+        
+        scoreText = game.add.text(100,100, score1.toString(), style);
 
     },
     update: function () {
@@ -142,13 +145,13 @@ var mainState = {
         }
         if(char.body.touching.left && !isfacingright) {
             score1++;
-            console.log(score1);
+            scoreText.text = score1.toString();
             enemy.kill();
             //this.enemy.body.velocity.x++;
         }
         if(char.body.touching.right && isfacingright) {
             score1++;
-            console.log(score1);
+            scoreText.text = score1.toString();
             enemy.kill();
             //this.enemy.body.velocity.x++;
         }
@@ -160,9 +163,10 @@ var mainState = {
             enemy.body.y = game.height - 100;
         }
         if (char.body.touching.up) {
-            enemy.body.y = game.height
+            char.body.y = game.height - 50 - char.height;
         }
     }
+    
 };
 
 // Initialize Phaser
