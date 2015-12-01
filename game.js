@@ -111,8 +111,8 @@ var mainState = {
         
         if (time > 30) {
             for (var i = 0; i < this.enemies.length; i++) {
-                 this.temp = this.enemies.getChildAt(i);
-                 this.temp.body.velocity.x = this.temp.body.velocity.x * (Math.round(Math.random()) * 2 - 1);
+                 this.zombie = this.enemies.getChildAt(i);
+                 this.zombie.body.velocity.x = this.zombie.body.velocity.x * (Math.round(Math.random()) * 2 - 1);
             }
             time = 0;
         } else {
@@ -127,9 +127,13 @@ var mainState = {
         } else {
             time2++;
         }
-//        if (this.temp.sprite.body.y < 300){
-//            this.temp.sprite.body.y++;
-//        }
+        for (var i = 0; i < this.enemies.length; i++) {
+            this.zombie = this.enemies.getChildAt(i);
+            if (this.zombie.body.y < 300){
+            this.zombie.body.y--;
+            }
+        }
+              
     },
     
     check: function(char, enemy) {
@@ -140,11 +144,13 @@ var mainState = {
             score1++;
             console.log(score1);
             enemy.kill();
+            //this.enemy.body.velocity.x++;
         }
         if(char.body.touching.right && isfacingright) {
             score1++;
             console.log(score1);
             enemy.kill();
+            //this.enemy.body.velocity.x++;
         }
         if(char.body.touching.right && !isfacingright) {
             char.kill();
@@ -152,6 +158,9 @@ var mainState = {
         
         if (char.body.touching.down) {
             enemy.body.y = game.height - 100;
+        }
+        if (char.body.touching.up) {
+            enemy.body.y = game.height
         }
     }
 };
