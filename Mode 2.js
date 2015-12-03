@@ -14,7 +14,9 @@ var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
 
 var scoreText;
 
-var mainState = {
+var charHealth = 3;
+
+var secondState = {
     spritecreator: function(imagename,scale,initialx){
 		var sprite = game.add.sprite(initialx, 50, imagename);
 		game.physics.enable(sprite, Phaser.Physics.ARCADE);
@@ -45,6 +47,19 @@ var mainState = {
         this.bg = game.add.image (0, 0,'background');
         this.bg.width = game.width;
         this.bg.height = game.height;
+        
+         
+        this.heart1 = game.add.image (500, 200, 'heart')
+        this.heart1.scale.x = 0.25;
+        this.heart1.scale.y = 0.25;
+        
+        this.heart2 = game.add.image (750, 200, 'heart')
+        this.heart2.scale.x = 0.25;
+        this.heart2.scale.y = 0.25;
+        
+        this.heart3 = game.add.image (1000, 200, 'heart')
+        this.heart3.scale.x = 0.25;
+        this.heart3.scale.y = 0.25;
         
         // This function is called after the preload function
         // Here we set up the game, display sprites, etc.
@@ -126,8 +141,8 @@ var mainState = {
         }
         
         
-        if (score1 > 118) {
-            tempScore = 118;
+        if (score1 > 120) {
+            tempScore = 120;
         } else {
             tempScore = score1; 
         }
@@ -149,29 +164,53 @@ var mainState = {
             this.zombie.body.y--;
             }
         }
+        
+//        if (charHealth < 3) {
+//            this.heart3.visible = false;
+//        }
+//        
+//        if (charHealth < 2) {
+//            this.heart2.visible = false;
+//        }
+//        
+//        if (charHealth < 1) {
+//            this.heart1.visible = false;
+//        }
               
     },
     
     check: function(char, enemy) {
         if(char.body.touching.left && isfacingright)  {
-            char.kill();
+            if (charHealth <= 0) {
+                char.kill();
+            } else {
+                charHealth--;
         }
         if(char.body.touching.left && !isfacingright) {
             score1++;
             scoreText.text = score1.toString();
             enemy.kill();
+            this.enemy.body.velocity.x++;
         }
         if(char.body.touching.right && isfacingright) {
             score1++;
             scoreText.text = score1.toString();
             enemy.kill();
+            this.enemy.body.velocity.x++;
         }
         if(char.body.touching.right && !isfacingright) {
-            char.kill();
+            if (charHealth <= 0) {
+                char.kill();
+            } else {
+                charHealth--;
         }
         
         if (char.body.touching.down && enemy.body.touching.up) {
-            char.kill();
+            if (charHealth <= 0) {
+                char.kill();
+            } else {
+                charHealth--;
+            }
             enemy.body.y = game.height - 100;
         }
         if (char.body.touching.up) {
@@ -186,5 +225,4 @@ var game = new Phaser.Game(1200, 650, Phaser.AUTO, 'gameDiv');
 
 // And finally we tell Phaser to add and start our 'main' state
 game.state.add('main', mainState);
-//game.state.add('main2', secondState);
 game.state.start('main');
