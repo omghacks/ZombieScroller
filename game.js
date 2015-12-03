@@ -68,7 +68,7 @@ var mainState = {
 
 		this.enemy = this.spritecreator('zombieCharac',0.2,200);
         
-        this.enemy.body.velocity.x = 100;
+        this.enemy.body.velocity.x = 200;
         
         this.enemies.add(this.enemy);
         
@@ -88,14 +88,14 @@ var mainState = {
             this.character.scale.x = 0.2; //flipped
             isfacingright = true;
            
-            this.character.body.velocity.x = 300;
+            this.character.body.velocity.x = 300 + score1 * 0.5;
         } else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
             this.character.anchor.setTo(.5, 1); //so it flips around its middle
             this.character.scale.x = 0.2; //facing default direction
             this.character.scale.x = -0.2; //flipped
             isfacingright = false;
            
-            this.character.body.velocity.x = -300;
+            this.character.body.velocity.x = -300 - score1 * 0.5;
         } else {
             this.character.body.velocity.x = 0;
         }
@@ -122,9 +122,9 @@ var mainState = {
             time++;
         }
         
-        if (time2 > 60) {
+        if (time2 > 60 - score1 * 0.5) {
             this.temp = this.spritecreator('zombieCharac',0.2, Math.random() * 1000 - 0);
-            this.temp.body.velocity.x = 100;
+            this.temp.body.velocity.x = 150 + score1 * 2;
             this.enemies.add(this.temp);
             time2 = 0;
         } else {
@@ -159,7 +159,8 @@ var mainState = {
             char.kill();
         }
         
-        if (char.body.touching.down) {
+        if (char.body.touching.down && enemy.body.touching.up) {
+            char.kill();
             enemy.body.y = game.height - 100;
         }
         if (char.body.touching.up) {
