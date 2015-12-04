@@ -29,4 +29,4 @@ var game = new Phaser.Game(1200, 650, Phaser.AUTO, 'gameDiv');
 game.state.add('title', TitleScreen)
 game.state.add('main', mainState);
 game.state.add('main2', secondState);
-game.state.start('main2');
+game.state.start('title');
