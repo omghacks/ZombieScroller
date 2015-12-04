@@ -6,6 +6,8 @@ var time = 0;
 
 var time2 = 0;
 
+var time3 = 0;
+
 var score1 = 0;
 
 var tempScore;
@@ -160,23 +162,23 @@ var secondState = {
     
         for (var i = 0; i < this.enemies.length; i++) {
             this.zombie = this.enemies.getChildAt(i);
-            if (this.zombie.body.y < 300){
-            this.zombie.body.y--;
+            if (this.zombie.body.y < 300) {
+                this.zombie.body.y--;
             }
         }
         
-//        if (charHealth < 3) {
-//            this.heart3.visible = false;
-//        }
-//        
-//        if (charHealth < 2) {
-//            this.heart2.visible = false;
-//        }
-//        
-//        if (charHealth < 1) {
-//            this.heart1.visible = false;
-//        }
-              
+        if (charHealth < 3) {
+            this.heart3.visible = false;
+        }
+        
+        if (charHealth < 2) {
+            this.heart2.visible = false;
+        }
+        
+        if (charHealth < 1) {
+            this.heart1.visible = false;
+        }
+    
     },
     
     check: function(char, enemy) {
@@ -184,45 +186,59 @@ var secondState = {
             if (charHealth <= 0) {
                 char.kill();
             } else {
-                charHealth--;
+                if (time3 > 30) {
+                    charHealth--;
+                    console.log(charHealth);
+                    time3 = 0;
+                } else {
+                    time3++;
+                }
+            }
         }
         if(char.body.touching.left && !isfacingright) {
             score1++;
             scoreText.text = score1.toString();
             enemy.kill();
-            this.enemy.body.velocity.x++;
+            enemy.body.velocity.x++;
         }
         if(char.body.touching.right && isfacingright) {
             score1++;
             scoreText.text = score1.toString();
             enemy.kill();
-            this.enemy.body.velocity.x++;
+            enemy.body.velocity.x++;
         }
         if(char.body.touching.right && !isfacingright) {
             if (charHealth <= 0) {
                 char.kill();
             } else {
-                charHealth--;
+                if (time3 > 30) {
+                    charHealth--;
+                    console.log(charHealth);
+                    time3 = 0;
+                } else {
+                    time3++;
+                }
+            }
         }
         
         if (char.body.touching.down && enemy.body.touching.up) {
             if (charHealth <= 0) {
                 char.kill();
             } else {
-                charHealth--;
+                if (time3 > 30) {
+                    charHealth--;
+                    console.log(charHealth);
+                    time3 = 0;
+                } else {
+                    time3++;
+                }
             }
             enemy.body.y = game.height - 100;
         }
+        
         if (char.body.touching.up) {
             char.body.y = game.height - 50 - char.height;
         }
     }
     
 };
-
-// Initialize Phaser
-var game = new Phaser.Game(1200, 650, Phaser.AUTO, 'gameDiv');
-
-// And finally we tell Phaser to add and start our 'main' state
-game.state.add('main', mainState);
-game.state.start('main');
