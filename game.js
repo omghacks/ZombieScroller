@@ -8,7 +8,7 @@ var time2 = 0;
 
 var time9 = 0;
 
-var timeLim = 120;
+var timeLim = 60;
 
 var score1 = 0;
 
