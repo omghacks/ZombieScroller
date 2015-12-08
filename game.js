@@ -6,6 +6,10 @@ var time = 0;
 
 var time2 = 0;
 
+var time9 = 0;
+
+var timeLim = 120;
+
 var score1 = 0;
 
 var tempScore;
@@ -64,7 +68,11 @@ var mainState = {
         
         this.enemies.add(this.enemy);
         
-        scoreText = game.add.text(100,100, score1.toString(), style);
+        scoreLab = game.add.text(50,100, "Score:", style);
+        scoreText = game.add.text(300,100, score1.toString(), style);
+        
+        timeLab = game.add.text(750,100, "Time:", style);
+        timeText = game.add.text(960,100, timeLim.toString(), style);
 
     },
     update: function () {
@@ -142,12 +150,19 @@ var mainState = {
             this.zombie.body.y--;
             }
         }
-              
+        if (time9 <= 60){
+            time9 ++;
+        } else {
+            time9 = 0;
+            timeLim --;
+            timeText.text = timeLim;
+        }
     },
     
     check: function(char, enemy) {
         if(char.body.touching.left && isfacingright)  {
             char.kill();
+            enemy.kill();
         }
         if(char.body.touching.left && !isfacingright) {
             score1++;
@@ -161,6 +176,7 @@ var mainState = {
         }
         if(char.body.touching.right && !isfacingright) {
             char.kill();
+            enemy.kill();
         }
         
         if (char.body.touching.down && enemy.body.touching.up) {

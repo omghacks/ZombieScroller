@@ -116,8 +116,6 @@ var secondState = {
             isfacingright = false;
            
             this.character.body.velocity.x = -300 - score1 * 0.5;
-        } else {
-            this.character.body.velocity.x = 0;
         }
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
@@ -144,7 +142,6 @@ var secondState = {
         for (var i = 0; i < this.enemies.length; i++) {
             this.zombie = this.enemies.getChildAt(i);
             if (this.zombie.body.velocity.x === 0){
-                console.log ("check's out")
                 this.zombie.body.velocity.x =  (150 + score1 * 2) * (Math.round(Math.random()) * 2 - 1);
             }
         }
@@ -225,6 +222,7 @@ var secondState = {
                     time3++;
                 }
             }
+            enemy.kill();
         }
         
         if (char.body.touching.down && enemy.body.touching.up) {
