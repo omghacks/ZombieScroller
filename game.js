@@ -23,11 +23,7 @@ var mainState = {
         sprite.scale.y = scale;
 	   return sprite;
     },   
-    // Here we add all the functions we need for our state
-    // For this project we will just have 3 functions
     preload: function () {
-        // This function will be executed at the beginning
-        // That's where we load the game's assets
         game.load.image('background', 'assets/images/background.jpg');
         game.load.image('mainCharac', 'assets/images/mariopixel.png');
         game.load.image('zombieCharac', 'assets/images/zombie.png');
@@ -41,28 +37,21 @@ var mainState = {
         
         this.jumpTimer = 0;
         
-        //adds the background into the game
         this.bg = game.add.image (0, 0,'background');
         this.bg.width = game.width;
         this.bg.height = game.height;
         
-        // This function is called after the preload function
-        // Here we set up the game, display sprites, etc.
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.arcade.gravity.y = 2000;
         
-        //adds the floor into the game
         this.floor = game.add.sprite(0, game.height - 50, 'floor');
         this.floor.height = 50;
         this.floor.width = game.width;
         
-        //enables physics for the floor
         game.physics.enable(this.floor);
         
-        //makes it so the floor won't move when the bird hits it
         this.floor.body.immovable = true;
         
-        //makes it so the floor doesn't adhere to gravity
         this.floor.body.allowGravity = false;
         
         this.character = this.spritecreator ('mainCharac',0.2,100);
@@ -79,8 +68,6 @@ var mainState = {
 
     },
     update: function () {
-        // This function is called 60 times per second
-        // It contains the game's logic
         game.physics.arcade.collide(this.enemies, this.floor);
         game.physics.arcade.collide(this.character, this.floor);
         game.physics.arcade.collide(this.character, this.enemies, this.check);
@@ -125,6 +112,12 @@ var mainState = {
             time++;
         }
         
+        for (var i = 0; i < this.enemies.length; i++) {
+            this.zombie = this.enemies.getChildAt(i);
+            if (this.zombie.body.velocity.x === 0){
+                this.zombie.body.velocity.x =  (150 + score1 * 2) * (Math.round(Math.random()) * 2 - 1);
+            }
+        }
         
         if (score1 > 118) {
             tempScore = 118;

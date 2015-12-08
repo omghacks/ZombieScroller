@@ -6,7 +6,7 @@ var time = 0;
 
 var time2 = 0;
 
-var time3 = 0;
+var time3 = 30;
 
 var score1 = 0;
 
@@ -141,7 +141,13 @@ var secondState = {
         } else {
             time++;
         }
-        
+        for (var i = 0; i < this.enemies.length; i++) {
+            this.zombie = this.enemies.getChildAt(i);
+            if (this.zombie.body.velocity.x === 0){
+                console.log ("check's out")
+                this.zombie.body.velocity.x =  (150 + score1 * 2) * (Math.round(Math.random()) * 2 - 1);
+            }
+        }
         
         if (score1 > 120) {
             tempScore = 120;
