@@ -198,6 +198,8 @@ var secondState = {
                 } else {
                     time3++;
                 }
+                char.body.velocity.x = 300 + score1 * 0.5;
+                enemy.kill();
             }
         }
         if(char.body.touching.left && !isfacingright) {
@@ -223,8 +225,9 @@ var secondState = {
                 } else {
                     time3++;
                 }
+                char.body.velocity.x = -300 - score1 * 0.5;
+                enemy.kill();
             }
-            enemy.kill();
         }
         
         if (char.body.touching.down && enemy.body.touching.up) {
