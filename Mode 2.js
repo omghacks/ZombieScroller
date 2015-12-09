@@ -6,7 +6,7 @@ var time = 0;
 
 var time2 = 0;
 
-var time3 = 30;
+var time3 = 5;
 
 var score1 = 0;
 
@@ -117,7 +117,7 @@ var secondState = {
            
             this.character.body.velocity.x = -300 - score1 * 0.5;
         } else {
-            this.character.body.velocity.x = 0;
+            //this.character.body.velocity.x = 0;
         }
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
@@ -191,26 +191,28 @@ var secondState = {
             if (charHealth <= 0) {
                 char.kill();
             } else {
-                if (time3 > 30) {
+                if (time3 > 1) {
                     charHealth--;
                     console.log(charHealth);
                     time3 = 0;
                 } else {
                     time3++;
                 }
-                char.body.velocity.x = 300 + score1 * 0.5;
+//                char.body.velocity.x = 300 + score1 * 0.5;
                 enemy.kill();
             }
         }
         if(char.body.touching.left && !isfacingright) {
             score1++;
             scoreText.text = score1.toString();
+            char.body.velocity.x = -300 - score1 * 0.5;
             enemy.kill();
             enemy.body.velocity.x++;
         }
         if(char.body.touching.right && isfacingright) {
             score1++;
             scoreText.text = score1.toString();
+            char.body.velocity.x = 300 + score1 * 0.5;
             enemy.kill();
             enemy.body.velocity.x++;
         }
@@ -218,14 +220,14 @@ var secondState = {
             if (charHealth <= 0) {
                 char.kill();
             } else {
-                if (time3 > 30) {
+                if (time3 > 5) {
                     charHealth--;
                     console.log(charHealth);
                     time3 = 0;
                 } else {
                     time3++;
                 }
-                char.body.velocity.x = -300 - score1 * 0.5;
+//                char.body.velocity.x = -300 - score1 * 0.5;
                 enemy.kill();
             }
         }
@@ -234,7 +236,7 @@ var secondState = {
             if (charHealth <= 0) {
                 char.kill();
             } else {
-                if (time3 > 30) {
+                if (time3 > 5) {
                     charHealth--;
                     console.log(charHealth);
                     time3 = 0;
@@ -249,5 +251,4 @@ var secondState = {
             char.body.y = game.height - 50 - char.height;
         }
     }
-    
 };

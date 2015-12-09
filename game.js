@@ -95,7 +95,7 @@ var mainState = {
            
             this.character.body.velocity.x = -300 - score1 * 0.5;
         } else {
-            this.character.body.velocity.x = 0;
+            //is.character.body.velocity.x = 0;
         }
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
@@ -134,7 +134,7 @@ var mainState = {
         }
         
         
-        if (time2 > 60 - tempScore * 0.5) {
+        if (time2 > 60 - tempScore * 0.6) {
             this.temp = this.spritecreator('zombieCharac',0.2, Math.random() * 1000 - 0);
             this.temp.body.velocity.x = 150 + score1 * 2;
             this.enemies.add(this.temp);
@@ -167,11 +167,13 @@ var mainState = {
         if(char.body.touching.left && !isfacingright) {
             score1++;
             scoreText.text = score1.toString();
+            char.body.velocity.x = -300 - score1 * 0.5;
             enemy.kill();
         }
         if(char.body.touching.right && isfacingright) {
             score1++;
             scoreText.text = score1.toString();
+            char.body.velocity.x = 300 + score1 * 0.5;
             enemy.kill();
         }
         if(char.body.touching.right && !isfacingright) {
@@ -185,6 +187,10 @@ var mainState = {
         }
         if (char.body.touching.up) {
             char.body.y = game.height - 50 - char.height;
+        }
+        if (timeLim <= 0){
+            char.kill();
+            timeLim = 0;
         }
     }
     
