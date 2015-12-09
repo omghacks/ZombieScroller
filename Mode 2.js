@@ -217,10 +217,11 @@ var secondState = {
             enemy.body.velocity.x++;
         }
         if(char.body.touching.right && !isfacingright) {
+            console.log("in");
             if (charHealth <= 0) {
                 char.kill();
             } else {
-                if (time3 > 5) {
+                if (time3 > 1) {
                     charHealth--;
                     console.log(charHealth);
                     time3 = 0;
