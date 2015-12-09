@@ -182,25 +182,23 @@ var secondState = {
         
         if (charHealth < 1) {
             this.heart1.visible = false;
+            this.character.kill();
         }
+        
+        time3++;
+        
     
     },
     
     check: function(char, enemy) {
         if(char.body.touching.left && isfacingright)  {
-            if (charHealth <= 0) {
-                char.kill();
-            } else {
-                if (time3 > 1) {
+                if (time3 > 15) {
                     charHealth--;
                     console.log(charHealth);
                     time3 = 0;
-                } else {
-                    time3++;
                 }
 //                char.body.velocity.x = 300 + score1 * 0.5;
                 enemy.kill();
-            }
         }
         if(char.body.touching.left && !isfacingright) {
             score1++;
@@ -217,33 +215,20 @@ var secondState = {
             enemy.body.velocity.x++;
         }
         if(char.body.touching.right && !isfacingright) {
-            console.log("in");
-            if (charHealth <= 0) {
-                char.kill();
-            } else {
-                if (time3 > 1) {
+                if (time3 > 15) {
                     charHealth--;
                     console.log(charHealth);
                     time3 = 0;
-                } else {
-                    time3++;
                 }
 //                char.body.velocity.x = -300 - score1 * 0.5;
                 enemy.kill();
-            }
         }
         
         if (char.body.touching.down && enemy.body.touching.up) {
-            if (charHealth <= 0) {
-                char.kill();
-            } else {
-                if (time3 > 5) {
-                    charHealth--;
-                    console.log(charHealth);
-                    time3 = 0;
-                } else {
-                    time3++;
-                }
+            if (time3 > 15) {
+                charHealth--;
+                console.log(charHealth);
+                time3 = 0;
             }
             enemy.body.y = game.height - 100;
         }
