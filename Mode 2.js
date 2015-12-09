@@ -116,6 +116,8 @@ var secondState = {
             isfacingright = false;
            
             this.character.body.velocity.x = -300 - score1 * 0.5;
+        } else {
+            this.character.body.velocity.x = 0;
         }
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
