@@ -6,9 +6,15 @@ var TitleScreen = {
     },
     
     create: function () {
-        this.add.button(100, 100, 'mainCharac', this.mode1, this);
-        this.add.button(350, 350, 'zombieCharac', this.mode2, this);
+        var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
+
+        this.add.button(750, 250, 'mainCharac', this.mode1, this);
+        this.add.button(100, 350, 'zombieCharac', this.mode2, this);
         game.stage.backgroundColor = '#66ffcc';
+        Game1 = game.add.text(100,100, "Survival", style);
+        Game2 = game.add.text(750,100, "Time Rush", style);
+
+
     },
     
     mode1: function () {
